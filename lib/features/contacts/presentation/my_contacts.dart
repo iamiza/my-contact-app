@@ -27,7 +27,12 @@ class MyContactsDesign extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                showSearch(context: context, delegate: ContactSearchDelegate());
+                showSearch(
+                    context: context,
+                    delegate: ContactSearchDelegate(
+                      contacts.map((e) => e.name).toList(),
+                      contacts.map((e) => e.contactno).toList(),
+                    ));
               },
               icon: Icon(Icons.search))
         ],

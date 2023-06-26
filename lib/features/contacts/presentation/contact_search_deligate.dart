@@ -4,33 +4,49 @@ class ContactSearchDelegate extends SearchDelegate<String> {
   List<String> name;
   List<String> phoneNo;
   ContactSearchDelegate(this.name, this.phoneNo);
-  SearchDelegate() {
-    TextField(
-      decoration: InputDecoration(),
-    );
-  }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
-    // TODO: implement buildActions
-    throw UnimplementedError();
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
-    throw UnimplementedError();
+    return IconButton(
+        onPressed: () {
+          close(context, "");
+        },
+        icon: Icon(Icons.arrow_back));
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
+    final suggestionList = query.isEmpty
+        ? name
+        : name
+            .where((element) =>
+                element.toLowerCase().startsWith(query.toLowerCase()))
+            .toList();
+    return ListView.builder(
+      itemCount: suggestionList.length,
+      itemBuilder: (context, index) => ListTile(
+        leading: Icon(Icons.person_2_outlined),
+        title: Text(suggestionList[index]),
+        subtitle: Text(phoneNo[index]),
+        trailing: Icon(Icons.call),
+      ),
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    throw UnimplementedError();
+    return Column();
   }
 }
